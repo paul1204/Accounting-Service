@@ -2,12 +2,12 @@
 pipeline {
     agent any
 
-  //  environment{
-    //    NEW_VERISON = '1.1.0'
+    environment{
+        NEW_VERISON = '1.1.0'
    //     SERVER_CREDENTIALS = credentials('')
         //Need Credentials Binding PLugin
         //
- //   }
+    }
 
     tools{
         maven 'Maven'
@@ -50,14 +50,14 @@ pipeline {
         stage("deploy") {
                      steps {
                             echo 'deploying the application'
-                            echo "deploying with ${SERVER_CREDENTIALS}"
+                         //   echo "deploying with ${SERVER_CREDENTIALS}"
                           //  sh "${SERVER_CREDENTIALS}"
                             //or
                           //  withCredentials([usernamePassword(credentials: 'ID of the Projec' , usernameVariable: USER, passwordVariable:PWD )]){
-                                sh "some shell command ${USER} ${PWD}"
+                            //    sh "some shell command ${USER} ${PWD}"
                           //  }
 
-                            echo "deploying version ${params.VERSION}"
+                          //  echo "deploying version ${params.VERSION}"
                             }
             }
     }
