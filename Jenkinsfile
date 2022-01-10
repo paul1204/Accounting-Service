@@ -49,7 +49,7 @@ pipeline {
 
         stage("deploy") {
                      steps {
-                            echo 'deploying the application'
+                            echo 'deploying the application version ${NEW_VERISON}'
                          //   echo "deploying with ${SERVER_CREDENTIALS}"
                           //  sh "${SERVER_CREDENTIALS}"
                             //or
