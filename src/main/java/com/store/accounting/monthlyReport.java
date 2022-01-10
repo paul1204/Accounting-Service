@@ -11,14 +11,14 @@ public class monthlyReport {
     double mRegularFuelSales = 0;
 
     //double taxCollected = 0;
-    double mTaxRate = 0.062;
+    final double mTaxRate = 0.062;
 
     public monthlyReport(dailyReport r){
-        this.mDrinkSales = r.drinksSales;
-        this.mSnackSales = r.snackSales;
-        this.mHotFoodSales = r.hotFoodSales;
-        this.mTaxCollected = r.taxCollected;
-        this.mRegularFuelSales = r.regularFuelSales;
+        this.mDrinkSales += r.drinksSales;
+        this.mSnackSales += r.snackSales;
+        this.mHotFoodSales += r.hotFoodSales;
+        this.mTaxCollected += r.taxCollected;
+        this.mRegularFuelSales += r.regularFuelSales;
 
         if(taxCheck()==false){
             //Error
