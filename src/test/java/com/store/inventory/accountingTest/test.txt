@@ -1,0 +1,13 @@
+http://localhost:8080/accounting/daily
+
+{
+     "date": "10/10/2021",
+      "drinkSales": 5.00,
+      "snackSales": 5.00,
+      "hotFoodSales": 5.00,
+      "taxCollected": 5.00,
+      "regularFuelSales": 5.00
+}
+
+
+
