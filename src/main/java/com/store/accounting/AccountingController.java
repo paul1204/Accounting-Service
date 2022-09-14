@@ -36,6 +36,12 @@ class AccountingController <k,v>{
     AccountingService accService;
     final String base = "accounting";
 
+    @GetMapping("/")
+    public String a(){
+        return "Welcome to the Accounting Service!";
+    }
+
+
     @GetMapping(base)
     public String main(){
         return "Accounting Main Page";
