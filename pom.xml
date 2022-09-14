@@ -17,26 +17,15 @@
 		<java.version>11</java.version>
 	</properties>
 
-
-<repositories>
-
-</repositories>>
-
-
-
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -47,9 +36,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
@@ -60,59 +46,32 @@
 			<artifactId>kotlin-compiler</artifactId>
 			<version>1.6.10-RC</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.9</version>
 		</dependency>
-
-
-
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.11.163</version>
 		</dependency>
-
-
-		<!-- API, java.xml.bind module -->
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
 			<version>4.0.0</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version>
 		</dependency>
-
-
-		<!-- Runtime, com.sun.xml.bind module -->
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
 			<version>4.0.0</version>
 		</dependency>
-
-
-<!--		<dependency>-->
-<!--			<groupId>com.aspose</groupId>-->
-<!--			<artifactId>aspose-cells</artifactId>-->
-<!--			<version>version of aspose-cells API</version>-->
-<!--			<classifier>jdk17</classifier>-->
-<!--		</dependency>-->
-
-
-
-
-
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -121,8 +80,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
-
-
 </project>
