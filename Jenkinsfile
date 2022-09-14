@@ -1,3 +1,4 @@
+def gv
 
 pipeline {
     agent any
@@ -23,6 +24,14 @@ pipeline {
 
     stages {
 
+        stage("init"){
+            step{
+                script{
+                    gv = load "script.groovy"
+                }
+            }
+        }
+
         stage("build") {
            // when{
             //    expression{
@@ -30,6 +39,12 @@ pipeline {
               //  }
            // }
             steps {
+                    script{
+                    //write normal Groovy
+                    //load Script
+                    //gv = load "script.groovy"
+                        gv.buildApp()
+                    }
                     echo 'building the application'
                     echo "building version ${NEW_VERISON}"
                     //sh "mvn install" Maven Install
@@ -43,12 +58,20 @@ pipeline {
                 }
             }
             steps {
+
+                script{
+                    gv.testApp()
+                }
                     echo 'testing the application'
             }
             }
 
         stage("deploy") {
                      steps {
+
+                     script{
+                        gv.deployApp()
+                     }
                             echo 'deploying the application version ${NEW_VERISON}'
                          //   echo "deploying with ${SERVER_CREDENTIALS}"
                           //  sh "${SERVER_CREDENTIALS}"
@@ -67,5 +90,4 @@ pipeline {
    // success{}
    // failure{}
    // }
-
 }

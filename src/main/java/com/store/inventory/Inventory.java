@@ -14,27 +14,29 @@ public class Inventory {
 
     //List<T> list = new ArrayList<T>();
 
-    private List list = new ArrayList();
+    private List l = new ArrayList();
 
-    public void Inventory() {
-        list = initInventory();
+    public Inventory() {
+        initInventory();
     }
 
+    private void initInventory(){
 
+                l.add(new Drink("Pepsi", 1.99, 5, 1234));
+                l.add(new Drink("Diet Pepsi", 1.99, 5, 1235));
+                l.add(new Food("Lays", 1.99, 5, 9876));
+                l.add(new Food("Kit-Kat", 1.99, 5, 9875));
+                l.add(new Drink("Coke", 1.99, 5, 2345));
+                l.add(new Drink("Diet Coke", 1.99, 5, 2346));
 
-    private List<?>initInventory(){
-        return List.of(
-                new Drink("Pepsi", 1.99, 5, 1234),
-                new Drink("Diet Pepsi", 1.99, 5, 1235),
-                new Food("Lays", 1.99, 5, 9876),
-                new Food("Kit-Kat", 1.99, 5, 9875),
-                new Drink("Coke", 1.99, 5, 2345),
-                new Drink("Diet Coke", 1.99, 5, 2346)
-        );
     }
 
-    public List<?>getInventory(){
-        return list;
+    public List getInventory(){
+        return l;
+    }
+
+    public void addIventory(){
+
     }
 
 }

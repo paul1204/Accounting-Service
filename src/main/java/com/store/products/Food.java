@@ -13,4 +13,8 @@ public class Food {
         this.qty = qty;
         this.upc = upc;
     }
+
+    public void addQty(int q){this.qty += q;}
+    public int getQty(){return this.qty;}
+
 }
