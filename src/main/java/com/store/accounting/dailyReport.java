@@ -42,7 +42,7 @@ public class dailyReport {
 
 
     public dailyReport(dailyReport r){
-        this.date += r.date;
+        this.date = r.date;
         this.drinksSales = r.drinksSales;
         this.snackSales = r.snackSales;
         this.hotFoodSales = r.hotFoodSales;

@@ -38,6 +38,7 @@ public class AccountingService {
     }
 
 
+    //Add time and date of these reports
     private void pushDb(dailyReport r){
         repo.updateDaily(r.getDate(), r.getDrinksSales(), r.getHotFoodSales(), r.getRegularFuelSales(), r.getSales(), r.getSnackSales(), r.getTaxCollected(), r.getTaxRate());
     }

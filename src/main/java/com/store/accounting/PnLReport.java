@@ -30,13 +30,17 @@ public class PnLReport {
 
     PnLReport(){}
 
-    void setMonthlySales(){this.sales = 5000.00; this.cogs = 100.00;}
+    void setMonthlySales(){
+        this.sales = 5000.00;
+        this.cogs = 100.00;
+    }
 
 
     void calcGross() {
         this.grossProfit = sales - cogs;
     }
 
+    //Here is where all the Overhead cost will be calculated
     void calcOverHead() {
         this.expenses = 200;
     }
