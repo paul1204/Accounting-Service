@@ -70,8 +70,8 @@ class AccountingController <k,v>{
         //Generate Monthly Report
         String bucket = "dailysalescollection";
         AWSCredentials credentials = new BasicAWSCredentials(
-                "AKIAVPZ34GDEXMAVDYHJ",
-                "liXJ8jj7VcdjG9M0JfIGUIDA9RNZ6O6k8ZbTMARx"
+                "",
+                ""
 
         );
         AmazonS3 s3client = AmazonS3ClientBuilder
