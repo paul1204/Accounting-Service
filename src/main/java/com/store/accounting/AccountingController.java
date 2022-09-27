@@ -37,19 +37,19 @@ class AccountingController <k,v>{
     final String base = "accounting";
 
     @GetMapping("/")
-    public String a(){
-        return "Welcome to the Accounting Service!";
+    public String home(){
+        return "Welcome!\n " +
+                " - To access the Accounting Service, use /accounting";
     }
 
 
     @GetMapping(base)
     public String main(){
-        return "Accounting Main Page";
-    }
-
-    @GetMapping(base + "/hello")
-    public String test(){
-        return "THIS WORKSSSSSS";
+        return "Accounting Main Page\n" +
+                " - Use /sales/{date}  to view sales from a certain date\n" +
+                " - Example\n" +
+                " - http://localhost:8080/accounting/sales/010122"
+                ;
     }
 
     @Autowired
@@ -58,45 +58,19 @@ class AccountingController <k,v>{
     }
 
     @PostMapping(path = base + "/daily")
-    //public void d(@RequestBody TreeMap<k, v> map){
     public void d(@RequestBody dailyReport r){
-     //   dailyReport s = (dailyReport) map.get("dailyReport");
-      //  service.reportDaily((dailyReport) map.get("dailyReport"));
         accService.reportDaily(r);
     }
 
-    @GetMapping(path = base +"/sales")
-    public String sales() throws IOException {
-        //Generate Monthly Report
-        String bucket = "dailysalescollection";
-        AWSCredentials credentials = new BasicAWSCredentials(
-                "",
-                ""
 
-        );
-        AmazonS3 s3client = AmazonS3ClientBuilder
-                .standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.US_EAST_1)
-                .build();
+    //date formating is MM/DD/YY
+    @GetMapping(path = base +"/sales/{date}")
+    public String sales(@PathVariable("date") String date) throws IOException {
 
-        S3Object file = s3client.getObject(new GetObjectRequest(bucket, "Shift Report"));
-        return displayTextInputStream(file.getObjectContent());
+        S3Object salesFile = accService.getSales(date);
 
-    }
+        return accService.readSales(salesFile);
 
-
-    private static String displayTextInputStream(InputStream input) throws IOException {
-        // Read the text input stream one line at a time and display each line.
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            return gson.toJson(line);
-            //System.out.println(line);
-
-        }
-        System.out.println();
-        return null;
     }
 
     @GetMapping(path = base +"/monthly")
@@ -104,6 +78,18 @@ class AccountingController <k,v>{
         //Generate Monthly Report
         return "Hi";
     }
+
+    private static String displayTextInputStream(InputStream input) throws IOException {
+        // Read the text input stream one line at a time and display each line.
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            return gson.toJson(line);
+        }
+        System.out.println();
+        return null;
+    }
+
 
     @GetMapping(path = base+"/pnl")
     public String pnl(){
