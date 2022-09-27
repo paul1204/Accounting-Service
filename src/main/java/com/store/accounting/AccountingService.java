@@ -62,8 +62,8 @@ public class AccountingService {
      //   s3://dailysalescollection/Sales/010122.csv
 
         AWSCredentials credentials = new BasicAWSCredentials(
-                "AKIAVPZ34GDEVVMAH3F4",
-                "VMsxeOwf+TBRWI/2rSNNVEK3hmk9GBy9Gbi9UY+X"
+                "UPDATE ME",
+                "UPDATE ME"
 
         );
         AmazonS3 s3client = AmazonS3ClientBuilder
@@ -98,13 +98,6 @@ public class AccountingService {
 
     }
 
-
-
-
-    //Add time and date of these reports
-    private void pushDb(dailyReport r){
-        //repo.updateDaily(r.getDate(), r.getDrinksSales(), r.getHotFoodSales(), r.getRegularFuelSales(), r.getSales(), r.getSnackSales(), r.getTaxCollected(), r.getTaxRate());
-    }
 
     private void pushSalesDb(String[] data) {
         repo.updateDailySales(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]));
