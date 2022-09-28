@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import static com.store.accounting.AccountingController.gson;
 
@@ -41,7 +42,7 @@ public class AccountingService {
     @Transactional
     public void reportDaily(dailyReport r){
         report = new dailyReport(r);
-        pushDb(report);
+       // pushDb(report);
         System.out.println(report.toString());
         //Add to Database
     }
@@ -57,15 +58,13 @@ public class AccountingService {
         String bucket = "dailysalescollection/Sales";
 
         String fileToPull = date + ".csv";
-
-
      //   s3://dailysalescollection/Sales/010122.csv
-
         AWSCredentials credentials = new BasicAWSCredentials(
-                "UPDATE ME",
-                "UPDATE ME"
+                "",
+                ""
 
         );
+
         AmazonS3 s3client = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -73,31 +72,30 @@ public class AccountingService {
                 .build();
 
         S3Object file = s3client.getObject(new GetObjectRequest(bucket, fileToPull));
-
-
         return file;
+    }
 
+
+    public String convertData(S3Object salesFile) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(salesFile.getObjectContent()));
+        String salesData = reader.readLine();
+        return salesData;
     }
 
     @Transactional
-    public String readSales(S3Object salesFile) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(salesFile.getObjectContent()));
-        String salesData = reader.readLine();
-        String[] data =  salesData.split(",");
+    public void updateDB(String sales) throws IOException {
+        String[] data =  sales.split(",");
 
         for (int i = 0; i < data.length; i++) {
-
+            //To view in console
             System.out.println(    Double.parseDouble(data[i]) + "  This is the data in the array");
         }
-
             pushSalesDb(data);
-            return salesData;
     }
 
-    public void getMonthlyReport() {
-
+    public List<String> getMonthlyReport() {
+        return repo.m();
     }
-
 
     private void pushSalesDb(String[] data) {
         repo.updateDailySales(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]));
