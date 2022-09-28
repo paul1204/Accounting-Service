@@ -79,27 +79,14 @@ class AccountingController <k,v>{
     }
 
 
-
-
     @GetMapping(path = base +"/monthly")
     public List<String> m(){
         return accService.getMonthlyReport();
     }
 
-    private static String displayTextInputStream(InputStream input) throws IOException {
-        // Read the text input stream one line at a time and display each line.
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            return gson.toJson(line);
-        }
-        System.out.println();
-        return null;
-    }
-
-
     @GetMapping(path = base+"/pnl")
     public String pnl(){
-        return accService.generatePnL();
+        return accService.pnLGenerate();
     }
+
 }

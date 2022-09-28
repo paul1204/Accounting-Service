@@ -11,68 +11,90 @@ public class PnLReport {
     double sales = 0;
     //Cost of Goods Sold
     double cogs = 0;
+
+    double tax = 0;
+    double qty = 0;
+    double expenses = 0;
+
     double grossProfit = 0;
     double netProfit = 0;
 
+    public double getSales() {
+        return sales;
+    }
+
+    public void setSales(double sales) {
+        this.sales += sales;
+    }
+
+    public double getCogs() {
+        return cogs;
+    }
+
+    public void setCogs(double cogs) {
+        this.cogs += cogs;
+    }
+
+    public double getTax() {
+        return Math.round(this.tax * 100.0) / 100.0;
+    }
+
+    public void setTax(double tax) {
+        this.tax += tax;
+    }
+
+    public double getQty() {
+        return qty;
+    }
+
+    public void setQty(double qty) {
+        this.qty += qty;
+    }
+
+    double getNetProfit(){
+        return  Math.round(this.netProfit * 100.0) / 100.0;
+    }
     //Expenses will be replaced by actual expenses such as Payroll and General Overhead
-    double expenses = 0;
 
-    //Cogs will be pulled from Daily Report
-    //Cash Register does report Cost of Goods Sold
-    //Accounting Service does not take in Cogs yet
-    //The arguments will come from a Monthly Report
-    //Not yet implemented
-    //Hard Coding monthlySale and monnthlyCogs
-    PnLReport(double monthlySale, double monthlyCogs) {
-    //    this.sales = 5000.00;
-      //  this.cogs = 100.00;
+    public PnLReport(){
     }
 
-    PnLReport(){}
-
-    void setMonthlySales(){
-        this.sales = 5000.00;
-        this.cogs = 100.00;
+    public PnLReport(double sales, double tax, double qty, double cogs){
+        this.sales = sales;
+        this.tax = tax;
+        this.qty = qty;
+        this.cogs = cogs;
     }
-
 
     void calcGross() {
         this.grossProfit = sales - cogs;
     }
 
     //Here is where all the Overhead cost will be calculated
+    //Coming Soon
     void calcOverHead() {
-        this.expenses = 200;
+        this.expenses += getTax();
     }
 
     void calcNet() {
         this.netProfit = grossProfit - expenses;
     }
 
-    String generatePnL(){
-        setMonthlySales();
+    @Override
+    public String toString() {
         calcGross();
         calcOverHead();
         calcNet();
-        double[] n = {sales, cogs, grossProfit, expenses, netProfit};
-        return gson.toJson(n);
+        return "PnLReport{" +
+                "sales= " + sales +
+                ", cogs= " + cogs +
+                ", Gross_Pofit= " + grossProfit +
+                ", Expenses= " + expenses +
+                ", Net_Profit= " + getNetProfit() +
+                '}';
     }
 }
 
-
-
-
-
-
-//    public static void main(String[] args){
-//
-//
-//        int[] numbers = {1, 1, 2, 3, 5, 8, 13};
-//        String numbersJson = gson.toJson(numbers);
-//
-//
-//        System.out.println(numbersJson);
-//    }
 
 
 
