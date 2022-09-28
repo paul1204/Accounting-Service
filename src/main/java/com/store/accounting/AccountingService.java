@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,11 @@ public class AccountingService {
     private AccountingRepo repo;
     PnLReport pnlreport = new PnLReport();
 
+    @Value("${apiKey}")
+    private String key1;
+
+
+
     @Autowired
     public AccountingService(AccountingRepo r){
         this.repo = r;
@@ -48,7 +54,6 @@ public class AccountingService {
         //Add to Database
     }
 
-
     public S3Object getSales(String date) throws IOException {
         //Generate Monthly Report
         String bucket = "dailysalescollection/Sales";
@@ -56,7 +61,7 @@ public class AccountingService {
         String fileToPull = date + ".csv";
      //   s3://dailysalescollection/Sales/010122.csv
         AWSCredentials credentials = new BasicAWSCredentials(
-                "",
+                key1,
                 ""
 
         );
