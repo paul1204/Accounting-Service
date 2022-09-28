@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AccountingRepo extends JpaRepository<dailyReport, Double> {
 
@@ -31,6 +33,11 @@ public interface AccountingRepo extends JpaRepository<dailyReport, Double> {
                      @Param("quantitySold") Double quantitySold,
                      @Param("cogs") Double cogs
     );
+
+    @Query(value = "SELECT * from daily_sales", nativeQuery = true)
+    List<String> m();
+
+
 
 }
 
