@@ -64,19 +64,26 @@ class AccountingController <k,v>{
 
 
     //date formating is MM/DD/YY
-    @GetMapping(path = base +"/sales/{date}")
-    public String sales(@PathVariable("date") String date) throws IOException {
-
+    @GetMapping(path = base +"/sales/view/{date}")
+    public String salesView(@PathVariable("date") String date) throws IOException {
         S3Object salesFile = accService.getSales(date);
-
-        return accService.readSales(salesFile);
-
+        return accService.convertData(salesFile);
     }
 
+    //date formating is MM/DD/YY
+    @PostMapping(path = base +"/sales/post/{date}")
+    public void salesPost(@PathVariable("date") String date) throws IOException {
+        S3Object salesFile = accService.getSales(date);
+        String salesData = accService.convertData(salesFile);
+        accService.updateDB(salesData);
+    }
+
+
+
+
     @GetMapping(path = base +"/monthly")
-    public String m(){
-        //Generate Monthly Report
-        return "Hi";
+    public List<String> m(){
+        return accService.getMonthlyReport();
     }
 
     private static String displayTextInputStream(InputStream input) throws IOException {
