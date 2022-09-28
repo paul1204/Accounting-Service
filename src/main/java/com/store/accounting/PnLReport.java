@@ -6,8 +6,6 @@ import com.google.gson.Gson;
 
 
 public class PnLReport {
-    Gson gson = new Gson();
-
     double sales = 0;
     //Cost of Goods Sold
     double cogs = 0;

@@ -99,8 +99,6 @@ public class AccountingService {
     public String pnLGenerate(){
         updatePnl();
         return pnlreport.toString();
-
-
     }
 
     private void updatePnl(){

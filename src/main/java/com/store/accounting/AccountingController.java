@@ -78,7 +78,6 @@ class AccountingController <k,v>{
         accService.updateDB(salesData);
     }
 
-
     @GetMapping(path = base +"/monthly")
     public List<String> m(){
         return accService.getMonthlyReport();
