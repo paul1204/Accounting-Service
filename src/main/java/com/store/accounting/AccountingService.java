@@ -36,8 +36,8 @@ public class AccountingService {
     private AccountingRepo repo;
     PnLReport pnlreport = new PnLReport();
 
-    @Value("${apiKey}")
-    private String key1;
+//    @Value("${apiKey}")
+//    private String key1;
 
 
 
@@ -61,7 +61,7 @@ public class AccountingService {
         String fileToPull = date + ".csv";
      //   s3://dailysalescollection/Sales/010122.csv
         AWSCredentials credentials = new BasicAWSCredentials(
-                key1,
+                "",
                 ""
 
         );
