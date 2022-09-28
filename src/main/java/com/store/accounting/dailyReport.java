@@ -17,8 +17,8 @@ public class dailyReport {
 
     @Id
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "sales_sequence",
+            sequenceName = "sales_sequence",
             allocationSize = 1
     )
 
