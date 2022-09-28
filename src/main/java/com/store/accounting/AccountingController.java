@@ -39,16 +39,16 @@ class AccountingController <k,v>{
     @GetMapping("/")
     public String home(){
         return "Welcome!\n " +
-                " - To access the Accounting Service, use /accounting";
+                " - To access the Accounting Service, use /accounting to access the Accounting Service";
     }
 
 
     @GetMapping(base)
     public String main(){
         return "Accounting Main Page\n" +
-                " - Use /sales/{date}  to view sales from a certain date\n" +
+                " - Use /monthly  to view sales from the month\n" +
                 " - Example\n" +
-                " - http://localhost:8080/accounting/sales/010122"
+                " - http://localhost:8080/accounting/monthly"
                 ;
     }
 
