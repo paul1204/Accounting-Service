@@ -86,9 +86,6 @@ public class AccountingService {
     @Transactional
     public void updateDB(String sales) throws IOException {
         String[] data = sales.split(",");
-
-
-
         for (int i = 0; i < data.length; i++) {
             //To view in console
             System.out.println(    Double.parseDouble(data[i]) + "  This is the data in the array");
@@ -104,7 +101,9 @@ public class AccountingService {
     //UNSURE OF RETURN TYPE
     public String pnLGenerate(){
         updatePnl();
-        return pnlreport.toString();
+        String report = pnlreport.toString();
+        pnlreport.clearReport();
+        return report;
     }
 
     private void updatePnl(){
