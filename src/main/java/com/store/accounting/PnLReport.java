@@ -78,6 +78,15 @@ public class PnLReport {
         this.netProfit = grossProfit - expenses;
     }
 
+    public void clearReport(){
+        this.sales = 0;
+        this.cogs = 0;
+        this.grossProfit = 0;
+        this.expenses = 0;
+        this.tax = 0;
+        this.netProfit = 0;
+    }
+
     @Override
     public String toString() {
         calcGross();
