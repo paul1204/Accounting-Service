@@ -114,8 +114,8 @@ public class AccountingService {
             List<Double> temp = convertedData.get(i);
             pnlreport.setSales(temp.get(0));
             pnlreport.setTax(temp.get(1));
-            pnlreport.setQty(temp.get(2));
-            pnlreport.setCogs(temp.get(3));
+            //pnlreport.setQty(temp.get(2));
+            pnlreport.setCogs(temp.get(3), temp.get(2));
         }
     }
 

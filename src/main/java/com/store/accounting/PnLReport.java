@@ -1,38 +1,41 @@
 package com.store.accounting;
 
 
-import com.google.gson.Gson;
+import javax.persistence.*;
 
 
-
+@Entity
+@Table
 public class PnLReport {
-    double sales = 0;
+
+    @Id
+    @SequenceGenerator(
+            name = "pnl_sequence",
+            sequenceName = "pnl_sequence",
+            allocationSize = 1
+    )
+
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "pnl_sequence"
+    )
+    double income = 0;
     //Cost of Goods Sold
     double cogs = 0;
-
-    double tax = 0;
-    double qty = 0;
-    double expenses = 0;
-
     double grossProfit = 0;
+    double expenses = 0;
     double netProfit = 0;
-
-    public double getSales() {
-        return sales;
-    }
+    double tax = 0;
 
     public void setSales(double sales) {
-        this.sales += sales;
+        this.income += sales;
     }
 
-    public double getCogs() {
-        return cogs;
+    public void setCogs(double cogs, double qty) {
+        this.cogs += cogs * qty;
     }
 
-    public void setCogs(double cogs) {
-        this.cogs += cogs;
-    }
-
+    //Tax is not an expense? Need to refresh my memory on that
     public double getTax() {
         return Math.round(this.tax * 100.0) / 100.0;
     }
@@ -41,13 +44,10 @@ public class PnLReport {
         this.tax += tax;
     }
 
-    public double getQty() {
-        return qty;
+    double getGrossProfit(){
+        return  Math.round(this.grossProfit * 100.0) / 100.0;
     }
 
-    public void setQty(double qty) {
-        this.qty += qty;
-    }
 
     double getNetProfit(){
         return  Math.round(this.netProfit * 100.0) / 100.0;
@@ -57,21 +57,17 @@ public class PnLReport {
     public PnLReport(){
     }
 
-    public PnLReport(double sales, double tax, double qty, double cogs){
-        this.sales = sales;
-        this.tax = tax;
-        this.qty = qty;
-        this.cogs = cogs;
-    }
-
     void calcGross() {
-        this.grossProfit = sales - cogs;
+        this.grossProfit = income - cogs;
     }
 
-    //Here is where all the Overhead cost will be calculated
-    //Coming Soon
+    //Here is where the expenses will be calculated
+    //
     void calcOverHead() {
-        this.expenses += getTax();
+        //Suppose tempVal represents all the expenses a company will accumulate
+        //A more detailed breakdown will be reported soon
+        double tempVal = 50.00;
+        this.expenses += tempVal;
     }
 
     void calcNet() {
@@ -79,7 +75,7 @@ public class PnLReport {
     }
 
     public void clearReport(){
-        this.sales = 0;
+        this.income = 0;
         this.cogs = 0;
         this.grossProfit = 0;
         this.expenses = 0;
@@ -93,9 +89,9 @@ public class PnLReport {
         calcOverHead();
         calcNet();
         return "PnLReport{" +
-                "sales= " + sales +
+                "Income= " + income +
                 ", cogs= " + cogs +
-                ", Gross_Pofit= " + grossProfit +
+                ", Gross_Pofit= " + getGrossProfit() +
                 ", Expenses= " + expenses +
                 ", Net_Profit= " + getNetProfit() +
                 '}';
