@@ -8,42 +8,39 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import org.hibernate.dialect.Ingres9Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.store.accounting.AccountingController.gson;
-
 
 @Service
 public class AccountingService {
-
-
 
     dailyReport report;
     monthlyReport monthlyReport;
     private AccountingRepo repo;
     PnLReport pnlreport = new PnLReport();
 
-//    @Value("${apiKey}")
-//    private String key1;
 
+    //@Value("${user}")
+    //private String user;
 
+    //@Value("${pass}")
+    //private String pass;
 
     @Autowired
     public AccountingService(AccountingRepo r){
         this.repo = r;
+        //this.user = user;
     }
 
     @Transactional
@@ -57,15 +54,12 @@ public class AccountingService {
     public S3Object getSales(String date) throws IOException {
         //Generate Monthly Report
         String bucket = "dailysalescollection/Sales";
-
         String fileToPull = date + ".csv";
      //   s3://dailysalescollection/Sales/010122.csv
         AWSCredentials credentials = new BasicAWSCredentials(
                 "",
                 ""
-
         );
-
         AmazonS3 s3client = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -75,7 +69,6 @@ public class AccountingService {
         S3Object file = s3client.getObject(new GetObjectRequest(bucket, fileToPull));
         return file;
     }
-
 
     public String convertData(S3Object salesFile) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(salesFile.getObjectContent()));
@@ -93,22 +86,21 @@ public class AccountingService {
             pushSalesDb(data);
     }
 
-    public List<String> getMonthlyReport() {
-        return repo.m();
+    public List<String> getMonthlyReport(Integer mmdd) {
+        return repo.monthly(mmdd);
     }
 
-
     //UNSURE OF RETURN TYPE
-    public String pnLGenerate(){
-        updatePnl();
+    public String pnLGenerate(Integer start, Integer end){
+        updatePnl(start, end);
         String report = pnlreport.toString();
         pnlreport.clearReport();
         return report;
     }
 
-    private void updatePnl(){
-        List<String> monthly = repo.m();
-        List<List<Double>> convertedData = convertData(monthly);
+    private void updatePnl(Integer s, Integer e){
+        List<String> pnl = repo.pnl(s, e);
+        List<List<Double>> convertedData = convertData(pnl);
 
         for(int i = 0; i < convertedData.size(); i++){
             List<Double> temp = convertedData.get(i);

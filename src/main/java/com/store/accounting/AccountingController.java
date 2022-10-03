@@ -1,37 +1,17 @@
 package com.store.accounting;
 
 
-
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
-import com.store.products.Drink;
-import com.store.products.Food;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
 
-import com.google.gson.Gson;
-
-//import java.sql.Date;
-import java.io.*;
-import java.util.Date;
+import javax.inject.Inject;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 
 @RestController
 class AccountingController <k,v>{
-
     static Gson gson = new Gson();
-
 
     AccountingService accService;
     final String base = "accounting";
@@ -42,7 +22,6 @@ class AccountingController <k,v>{
                 " - To access the Accounting Service, use /accounting to access the Accounting Service";
     }
 
-
     @GetMapping(base)
     public String main(){
         return "Accounting Main Page\n" +
@@ -52,7 +31,7 @@ class AccountingController <k,v>{
                 ;
     }
 
-    @Autowired
+    @Inject
     public AccountingController(AccountingService a){
         this.accService = a;
     }
@@ -61,7 +40,6 @@ class AccountingController <k,v>{
     public void d(@RequestBody dailyReport r){
         accService.reportDaily(r);
     }
-
 
     //date formating is MM/DD/YY
     @GetMapping(path = base +"/sales/view/{date}")
@@ -78,14 +56,14 @@ class AccountingController <k,v>{
         accService.updateDB(salesData);
     }
 
-    @GetMapping(path = base +"/monthly")
-    public List<String> m(){
-        return accService.getMonthlyReport();
+    @GetMapping(path = base +"/monthly/{mmyy}")
+    public List<String> m(@PathVariable("mmyy") Integer month){
+        return accService.getMonthlyReport(month);
     }
 
-    @GetMapping(path = base+"/pnl")
-    public String pnl(){
-        return accService.pnLGenerate();
+    @GetMapping(path = base+"/pnl/{mmyyS}-{mmyyE}")
+    public String pnl(@PathVariable("mmyyS") Integer start , @PathVariable("mmyyE") Integer end){
+        return "Yeah this works!";
+        //return accService.pnLGenerate(start, end);
     }
-
 }
