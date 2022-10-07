@@ -1,13 +1,23 @@
 package com.store.accounting;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "sales_report")
 public class salesReport {
 
-
+    @Id
+    @Column
+    String date = "";
+    @Column
     double sales = 0;
+    @Column
     double tax = 0;
+    @Column
     double qty = 0;
+    @Column
     double cogs = 0;
-
 
     public salesReport(double sales, double tax, double qty, double cogs) {
         this.sales = sales;

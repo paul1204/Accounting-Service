@@ -19,6 +19,7 @@ public class PnLReport {
             strategy = GenerationType.SEQUENCE,
             generator = "pnl_sequence"
     )
+    String year = "";
     double income = 0;
     //Cost of Goods Sold
     double cogs = 0;
