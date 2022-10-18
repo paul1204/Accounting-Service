@@ -13,7 +13,7 @@ public class salesReport {
     @Column
     double sales = 0;
     @Column
-    double tax = 0;
+    double tax_collected = 0;
     @Column
     double qty = 0;
     @Column
@@ -21,7 +21,7 @@ public class salesReport {
 
     public salesReport(double sales, double tax, double qty, double cogs) {
         this.sales = sales;
-        this.tax = tax;
+        this.tax_collected = tax;
         this.qty = qty;
         this.cogs = cogs;
     }
@@ -35,11 +35,11 @@ public class salesReport {
     }
 
     public double getTax() {
-        return tax;
+        return tax_collected;
     }
 
     public void setTax(double tax) {
-        this.tax = tax;
+        this.tax_collected = tax;
     }
 
     public double getQty() {
