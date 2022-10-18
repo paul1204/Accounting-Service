@@ -41,17 +41,16 @@ class AccountingController <k,v>{
         accService.reportDaily(r);
     }
 
-    //date formating is MM/DD/YY
-    @GetMapping(path = base +"/sales/view/{date}")
-    public String salesView(@PathVariable("date") String date) throws IOException {
-        S3Object salesFile = accService.getSales(date);
-        return accService.convertData(salesFile);
+    //date formating is MM-DD-YY
+    @GetMapping(path = base +"/sales/{date}")
+    public List<String> salesView(@PathVariable("date") String date) throws IOException {
+        return accService.getSales(date);
     }
 
     //date formating is MM/DD/YY
-    @PostMapping(path = base +"/sales/post/{date}")
+    @PutMapping(path = base +"/sales/{date}")
     public void salesPost(@PathVariable("date") String date) throws IOException {
-        S3Object salesFile = accService.getSales(date);
+        S3Object salesFile = accService.getSalesFile(date);
         String salesData = accService.convertData(salesFile);
         accService.updateDB(salesData);
     }

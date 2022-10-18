@@ -51,10 +51,12 @@ public class AccountingService {
         //Add to Database
     }
 
-    public S3Object getSales(String date) throws IOException {
+    public S3Object getSalesFile(String date) throws IOException {
         //Generate Monthly Report
         String bucket = "dailysalescollection/Sales";
         String fileToPull = date + ".csv";
+
+        //System.out.println(fileToPull + " ?");
      //   s3://dailysalescollection/Sales/010122.csv
         AWSCredentials credentials = new BasicAWSCredentials(
                 "",
@@ -70,6 +72,10 @@ public class AccountingService {
         return file;
     }
 
+    public List<String> getSales(String date){
+        return repo.getSales(date);
+    }
+
     public String convertData(S3Object salesFile) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(salesFile.getObjectContent()));
         String salesData = reader.readLine();
@@ -81,13 +87,22 @@ public class AccountingService {
         String[] data = sales.split(",");
         for (int i = 0; i < data.length; i++) {
             //To view in console
-            System.out.println(    Double.parseDouble(data[i]) + "  This is the data in the array");
+            //System.out.println(    Double.parseDouble(data[i]) + "  This is the data in the array");
         }
             pushSalesDb(data);
+
+
     }
 
     public List<String> getMonthlyReport(Integer mmdd) {
-        return repo.monthly(mmdd);
+
+        String s = Integer.toString(mmdd);
+        String mm = "" + s.charAt(0) + s.charAt(1);
+        String yy = "" + s.charAt(2) + s.charAt(3);
+
+       // return repo.monthly(Integer.toString(mmdd));
+
+        return repo.m(mm, yy);
     }
 
     //UNSURE OF RETURN TYPE
@@ -129,8 +144,10 @@ public class AccountingService {
         return convert;
     }
 
-
     private void pushSalesDb(String[] data) {
-        repo.updateDailySales(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+        repo.updateDailySales(data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]) ,Double.parseDouble(data[4]) );
     }
+
+
+
 }

@@ -12,16 +12,33 @@ import java.util.List;
 public interface AccountingRepo extends JpaRepository<dailyReport, Double> {
 
     @Modifying
-    @Query(value = "INSERT into daily_sales " +
-            "(total_Sales, tax_collected, quantitySold, cogs) values (:total_Sales, :tax_collected, :quantitySold, :cogs)", nativeQuery = true)
+    @Query(value = "INSERT into sales_report " +
+            "(date , sales, tax_collected, qty, cogs) values (:date ,:sales, :tax_collected, :qty, :cogs)", nativeQuery = true)
     void updateDailySales(
-                     //@Param("date") String date,
-                     @Param("total_Sales") Double total_sales,
+                     @Param("date") String date,
+                     @Param("sales") Double sales,
                      @Param("tax_collected") Double tax_collected,
-                     @Param("quantitySold") Double quantitySold,
+                     @Param("qty") Double qty,
                      @Param("cogs") Double cogs
     );
 
     @Query(value = "SELECT * from daily_sales", nativeQuery = true)
-    List<String> m();
+    List<String> monthly(@Param("mmyy") String mmyy);
+
+    @Query(value = "SELECT * from daily_sales", nativeQuery = true)
+    List<String> pnl(@Param("start") Integer start , @Param("end") Integer end );
+
+
+    @Query(value = "SELECT * from sales_report s_r where s_r.date = :date", nativeQuery = true)
+    List<String> getSales(@Param("date") String date);
+
+
+    @Query(value = "SELECT * from sales_report s_r where SUBSTRING(s_r.date, 1,2) = :mm AND SUBSTRING(s_r.dat,2) = :yy", nativeQuery = true)
+    List<String> m(@Param("mm") String mm, @Param("yy") String yy);
+
+
 }
+
+
+//    @Query(value = "SELECT * from sales_report s_r where SUBSTRING(s_r.date, 1,2) = :mm", nativeQuery = true)
+//    List<String> monthly(@Param("mm") String mm, @Param("yy") String yy );
