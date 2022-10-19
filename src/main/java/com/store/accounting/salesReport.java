@@ -2,6 +2,7 @@ package com.store.accounting;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "sales_report")
@@ -10,6 +11,7 @@ public class salesReport {
     @Id
     @Column
     String date = "";
+
     @Column
     double sales = 0;
     @Column

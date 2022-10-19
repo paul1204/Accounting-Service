@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -94,11 +95,18 @@ public class AccountingService {
 
     }
 
-    public List<String> getMonthlyReport(Integer mmdd) {
+    public List<String> getMonthlyReport(String month) {
 
-        String s = Integer.toString(mmdd);
-        String mm = "" + s.charAt(0) + s.charAt(1);
-        String yy = "" + s.charAt(2) + s.charAt(3);
+        //String s = Integer.toString(month);
+        //String s = month.toString();
+       // System.out.println(s + "  am i here????");
+        String mm = "" + month.charAt(0) + month.charAt(1);
+        String yy = "" + month.charAt(2) + month.charAt(3);
+
+        //for(int i = 0; i < s.length(); i++){
+        //    System.out.println(s.charAt(i) + " index of the date !!!!!!!!!!!!!");
+        //}
+
 
        // return repo.monthly(Integer.toString(mmdd));
 
@@ -106,23 +114,29 @@ public class AccountingService {
     }
 
     //UNSURE OF RETURN TYPE
-    public String pnLGenerate(Integer start, Integer end){
+    public String pnLGenerate(String start, String end){
         updatePnl(start, end);
         String report = pnlreport.toString();
         pnlreport.clearReport();
-        return report;
+        String output = "Profit and Loss for XYZ Inc from " + start + " to " + end;
+
+        return output + report;
     }
 
-    private void updatePnl(Integer s, Integer e){
-        List<String> pnl = repo.pnl(s, e);
+    private void updatePnl(String s, String e){
+        List<String> pnl = repo.p(s, e);
+      //  System.out.println(pnl.size() + " HEYYYYYYYYYYYYYYYYY");
+        for(String str: pnl){
+    //        System.out.println(str + " HIIIIIIIIIIIIIIIIIII");
+        }
         List<List<Double>> convertedData = convertData(pnl);
 
         for(int i = 0; i < convertedData.size(); i++){
             List<Double> temp = convertedData.get(i);
-            pnlreport.setSales(temp.get(0));
-            pnlreport.setTax(temp.get(1));
+            pnlreport.setSales(temp.get(2));
+            pnlreport.setTax(temp.get(3));
             //pnlreport.setQty(temp.get(2));
-            pnlreport.setCogs(temp.get(3), temp.get(2));
+            pnlreport.setCogs(temp.get(0), temp.get(1));
         }
     }
 
@@ -131,12 +145,13 @@ public class AccountingService {
         List<Double> temp2;
         for(String s: monthly){
             String[] temp = s.split(",");
-         //   System.out.println(temp.length + "  This is the length");
+            System.out.println(temp.length + "  This is the length");
+            for(String t : temp){System.out.println(t + " Content????");}
             temp2 = new ArrayList<>(temp.length);
          //   System.out.println(temp2.size() + "  This is the List length");
-            for(int i = 0; i < temp.length; i++){
+            for(int i = 1; i < temp.length; i++){
                 Double d = Double.parseDouble(temp[i]);
-                temp2.add(i,d);
+                temp2.add(i-1,d);
             }
             convert.add(temp2);
           //  System.out.println(s + "   These are the numbers" );

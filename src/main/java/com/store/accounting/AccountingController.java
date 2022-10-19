@@ -3,10 +3,12 @@ package com.store.accounting;
 
 import com.amazonaws.services.s3.model.S3Object;
 import com.google.gson.Gson;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -56,13 +58,25 @@ class AccountingController <k,v>{
     }
 
     @GetMapping(path = base +"/monthly/{mmyy}")
-    public List<String> m(@PathVariable("mmyy") Integer month){
+    public List<String> m(@PathVariable("mmyy") String month){
         return accService.getMonthlyReport(month);
     }
 
-    @GetMapping(path = base+"/pnl/{mmyyS}-{mmyyE}")
-    public String pnl(@PathVariable("mmyyS") Integer start , @PathVariable("mmyyE") Integer end){
-        return "Yeah this works!";
-        //return accService.pnLGenerate(start, end);
+//    @GetMapping(path = base +"/monthly/{month}")
+//    public List<String> m(@PathVariable("month") @DateTimeFormat(pattern = "dd.MM.yyyy") Date month){
+//        return accService.getMonthlyReport(month);
+//    }
+
+//    @GetMapping(path = base+"/pnl/{mmddyyyyS}-{mmddyyyyE}")
+//    public String pnl(@PathVariable("mmddyyyyS") String start , @PathVariable("mmddyyyyE") String end){
+//        //return "Yeah this works!";
+//        return accService.pnLGenerate(start, end);
+//    }
+
+    @GetMapping(path = base+"/pnl/{start}-{end}")
+    public String pnl(@PathVariable("start") String start , @PathVariable("end") String end ){
+        return accService.pnLGenerate(start, end);
     }
+
+
 }
